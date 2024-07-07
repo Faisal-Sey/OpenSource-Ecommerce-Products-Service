@@ -1,5 +1,4 @@
 from django.urls import path
-
 from products.views.menu_views import MenuListCreateAPIView, MenuRetrieveUpdateDestroyAPIView
 
 urlpatterns = [
