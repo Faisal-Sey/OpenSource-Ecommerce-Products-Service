@@ -14,6 +14,8 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.conf import settings
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 
@@ -23,7 +25,10 @@ api_version: str = PROJECT_CONFIGS.get("API_VERSION")
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path(f'api/v{api_version}/products/', include('products.urls')),
+    path(f'api/v{api_version}/products/', include('products.urls.main_urls')),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 handler404 = "products.views.handler404"

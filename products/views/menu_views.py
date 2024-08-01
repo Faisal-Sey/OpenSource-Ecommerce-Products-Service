@@ -12,7 +12,7 @@ class MenuListCreateAPIView(generics.ListCreateAPIView):
 
     def get_queryset(self) -> Any:
         logger.debug("Fetching menu list...")
-        queryset = super().get_queryset()
+        queryset = super().get_queryset().filter(hidden=False)
         logger.debug("Fetched %d menu items", queryset.count())
         return queryset
 

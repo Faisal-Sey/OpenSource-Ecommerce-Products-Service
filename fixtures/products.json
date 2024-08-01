@@ -1,0 +1,20 @@
+[
+  {
+    "model": "products.ProductLocation",
+    "pk": 1,
+    "fields": {
+      "name": "home/gallery",
+      "created_on": "2023-04-20 22:31:53.308379+00",
+      "updated_on": "2023-04-20 22:31:53.308379+00"
+    }
+  },
+  {
+    "model": "products.ProductLocation",
+    "pk": 2,
+    "fields": {
+      "name": "home/carousel",
+      "created_on": "2023-04-20 22:32:53.308379+00",
+      "updated_on": "2023-04-20 22:32:53.308379+00"
+    }
+  }
+]

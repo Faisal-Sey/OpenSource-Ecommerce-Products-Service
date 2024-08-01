@@ -19,6 +19,9 @@ from utils.logger.logger import CUSTOM_LOGGING
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 TEMPLATES_DIR = os.path.join(BASE_DIR, "templates")
+FIXTURE_DIRS = (
+    os.path.join(BASE_DIR, "fixtures"),
+)
 
 
 # Quick-start development settings - unsuitable for production
