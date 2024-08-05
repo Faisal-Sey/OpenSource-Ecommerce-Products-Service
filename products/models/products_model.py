@@ -1,4 +1,5 @@
 from django.db import models
+from django_quill.fields import QuillField
 
 from common.base_model import BaseModel
 
@@ -22,16 +23,6 @@ class ProductCurrency(BaseModel):
 
     class Meta:
         verbose_name_plural = "Product Currencies"
-
-
-class ProductDescription(BaseModel):
-    text = models.CharField(max_length=500)
-
-    def __str__(self):
-        return self.text
-
-    class Meta:
-        verbose_name_plural = "Product Description"
 
 
 class ProductColorTitle(BaseModel):
@@ -88,10 +79,7 @@ class ProductSize(BaseModel):
 
 class Product(BaseModel):
     name = models.CharField(max_length=255, blank=True)
-    description = models.ManyToManyField(
-        "products.ProductDescription",
-        related_name="product_description"
-    )
+    description = QuillField(blank=True, null=True)
     images = models.ManyToManyField(
         "products.Image",
         blank=True,

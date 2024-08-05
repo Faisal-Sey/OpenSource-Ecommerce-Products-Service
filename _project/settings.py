@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     # external
     'corsheaders',
     'rest_framework',
+    'django_quill',
 
     # internal
     'products'
@@ -69,7 +70,7 @@ ROOT_URLCONF = '_project.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [TEMPLATES_DIR,],
+        'DIRS': (TEMPLATES_DIR, ),
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -150,3 +151,25 @@ CORS_ALLOWED_ORIGINS: List[str] = CUSTOM_CORS_ALLOWED_ORIGINS.split(",") \
 
 # Logger
 LOGGING = CUSTOM_LOGGING
+
+# Quill Editor
+QUILL_CONFIGS = {
+    'default': {
+        'theme': 'snow',
+        'modules': {
+            'syntax': True,
+            'toolbar': [
+                [
+                    {'font': []},
+                    {'header': []},
+                    {'align': []},
+                    'bold', 'italic', 'underline', 'strike', 'blockquote',
+                    {'list': 'ordered'}, {'list': 'bullet'},
+                    {'color': []},
+                ],
+                ['link'],
+                ['clean'],
+            ]
+        }
+    }
+}

@@ -5,7 +5,9 @@ from products.models.products_model import (
     Product,
     ProductLocation,
     ProductCurrency,
-    ProductDescription, ProductSize, ProductColorTitle, ProductSizeTitle
+    ProductSize,
+    ProductColorTitle,
+    ProductSizeTitle
 )
 from products.serializers.menus_serializers import MenuSerializer
 
@@ -14,12 +16,6 @@ class ImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Image
         fields = '__all__'
-
-
-class ProductDescriptionSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = ProductDescription
-        fields = ('text',)
 
 
 class ProductLocationsSerializer(serializers.ModelSerializer):
@@ -73,11 +69,11 @@ class ListProductSerializer(serializers.ModelSerializer):
 
 class SingleProductSerializer(serializers.ModelSerializer):
     images = ImageSerializer(many=True, read_only=True)
-    description = ProductDescriptionSerializer(many=True, read_only=True)
     product_locations = ProductLocationsSerializer(many=True, read_only=True)
     product_type = MenuSerializer(many=True, read_only=True)
     featured_image = ImageSerializer(read_only=True)
     currency = ProductCurrencySerializer(read_only=True)
+    description = serializers.CharField(source='description.html')
 
     def to_representation(self, instance):
         data = super().to_representation(instance)
