@@ -77,6 +77,45 @@ class ProductSize(BaseModel):
         verbose_name_plural = "Product Sizes"
 
 
+class ProductCartItem(BaseModel):
+    product = models.ForeignKey(
+        "products.Product",
+        on_delete=models.CASCADE,
+        related_name="cart_item_product"
+    )
+    image = models.ForeignKey(
+        "products.Image",
+        on_delete=models.CASCADE,
+        related_name="cart_item_product_image"
+    )
+    quantity = models.IntegerField(default=0)
+    total_amount = models.FloatField(default=0.0)
+    product_size = models.JSONField(default=dict)
+
+    def __str__(self):
+        return self.product.name
+
+
+class ProductCart(BaseModel):
+    checkout_url = models.URLField(blank=True)
+    cart_items = models.ManyToManyField(
+        "products.ProductCartItem",
+        blank=True,
+        related_name="product_cart_item"
+    )
+    total_amount = models.FloatField(default=0.0)
+    total_taxed = models.FloatField(default=0.0)
+    currency = models.ForeignKey(
+        "products.ProductCurrency",
+        on_delete=models.DO_NOTHING,
+        null=True,
+        related_name="product_cart_currency"
+    )
+
+    def __str__(self):
+        return self.pk
+
+
 class Product(BaseModel):
     name = models.CharField(max_length=255, blank=True)
     description = QuillField(blank=True, null=True)

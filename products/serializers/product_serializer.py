@@ -7,7 +7,7 @@ from products.models.products_model import (
     ProductCurrency,
     ProductSize,
     ProductColorTitle,
-    ProductSizeTitle
+    ProductSizeTitle, ProductCart, ProductCartItem
 )
 from products.serializers.menus_serializers import MenuSerializer
 
@@ -82,4 +82,27 @@ class SingleProductSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Product
+        fields = '__all__'
+
+
+class CartProductSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Product
+        fields = ('id', 'name', 'price')
+
+
+class ProductCartItemSerializer(serializers.ModelSerializer):
+    product = CartProductSerializer(read_only=True)
+    image = ImageSerializer(read_only=True)
+
+    class Meta:
+        model = ProductCartItem
+
+
+class ProductCartSerializer(serializers.ModelSerializer):
+    cart_items = ImageSerializer(many=True, read_only=True)
+    currency = ProductCurrencySerializer(read_only=True)
+
+    class Meta:
+        model = ProductCart
         fields = '__all__'
