@@ -2,8 +2,8 @@ from typing import Any
 from rest_framework import generics
 
 from utils.logger.logger_handler import logger
-from products.models.menus_model import Menu
-from products.serializers.menus_serializers import MenuSerializer
+from products.models.configurations.menus_model import Menu
+from products.serializers.configurations.menus_serializers import MenuSerializer
 
 
 class MenuListCreateAPIView(generics.ListCreateAPIView):

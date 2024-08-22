@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
-from products.models.images_model import Image
-from products.models.products_model import (
+from products.models.products.images_model import Image
+from products.models.products.products_model import (
     Product,
     ProductLocation,
     ProductCurrency,
@@ -9,7 +9,7 @@ from products.models.products_model import (
     ProductColorTitle,
     ProductSizeTitle, ProductCart, ProductCartItem
 )
-from products.serializers.menus_serializers import MenuSerializer
+from products.serializers.configurations.menus_serializers import MenuSerializer
 
 
 class ImageSerializer(serializers.ModelSerializer):
@@ -86,23 +86,41 @@ class SingleProductSerializer(serializers.ModelSerializer):
 
 
 class CartProductSerializer(serializers.ModelSerializer):
+    featured_image = ImageSerializer(read_only=True)
+
     class Meta:
         model = Product
-        fields = ('id', 'name', 'price')
+        fields = ('id', 'name', 'price', 'featured_image')
 
 
 class ProductCartItemSerializer(serializers.ModelSerializer):
-    product = CartProductSerializer(read_only=True)
-    image = ImageSerializer(read_only=True)
+    product = CartProductSerializer(required=True)
+    image = ImageSerializer(required=True)
 
     class Meta:
         model = ProductCartItem
+        fields = '__all__'
 
 
 class ProductCartSerializer(serializers.ModelSerializer):
-    cart_items = ImageSerializer(many=True, read_only=True)
-    currency = ProductCurrencySerializer(read_only=True)
+    cart_items = ProductCartItemSerializer(many=True, required=False)
+    currency = serializers.PrimaryKeyRelatedField(queryset=ProductCurrency.objects.all())
+    currency_details = ProductCurrencySerializer(read_only=True, source='currency', required=False)
 
     class Meta:
         model = ProductCart
         fields = '__all__'
+
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        data['currency'] = self.fields['currency_details'].to_representation(instance.currency)
+        data.pop('currency_details')
+        return data
+
+
+class AddItemToCartSerializer(serializers.Serializer):
+    product_id = serializers.IntegerField()
+    image_id = serializers.IntegerField()
+    total_amount = serializers.FloatField()
+    quantity = serializers.IntegerField()
+    product_size = serializers.JSONField()

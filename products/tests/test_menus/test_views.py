@@ -3,7 +3,7 @@ from django.test import TestCase, RequestFactory
 from django.http import HttpRequest, HttpResponse
 from django.urls import reverse
 from rest_framework.test import APIRequestFactory
-from products.models.menus_model import Menu
+from products.models.configurations.menus_model import Menu
 from products.views import handler404, MenuListCreateAPIView, MenuRetrieveUpdateDestroyAPIView
 
 

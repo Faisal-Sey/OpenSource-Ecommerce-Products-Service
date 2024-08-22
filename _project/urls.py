@@ -25,7 +25,7 @@ api_version: str = PROJECT_CONFIGS.get("API_VERSION")
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path(f'api/v{api_version}/products/', include('products.urls.main_urls')),
+    path(f'api/v{api_version}/products/', include('products.urls.main')),
 ]
 
 if settings.DEBUG:

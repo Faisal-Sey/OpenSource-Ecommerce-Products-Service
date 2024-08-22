@@ -1,17 +1,15 @@
-from django import forms
 from django.contrib import admin
-from django_quill.forms import QuillFormField
 
-from products.models.images_model import Image
-from products.models.products_model import (
+from products.models.products.images_model import Image
+from products.models.products.products_model import (
     Product,
     ProductCurrency,
     ProductLocation,
     ProductSize,
     ProductSizeTitle,
-    ProductColorTitle
+    ProductColorTitle, ProductCart, ProductCartItem
 )
-from products.models.menus_model import Menu
+from products.models.configurations.menus_model import Menu
 
 
 @admin.register(Product)
@@ -26,3 +24,5 @@ admin.site.register(ProductColorTitle)
 admin.site.register(ProductLocation)
 admin.site.register(ProductSize)
 admin.site.register(ProductSizeTitle)
+admin.site.register(ProductCart)
+admin.site.register(ProductCartItem)

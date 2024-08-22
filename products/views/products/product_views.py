@@ -1,11 +1,11 @@
-from typing import Any, Dict, List
+from typing import Any, Dict
 
 from django.db.models import QuerySet
 from rest_framework import generics
 from rest_framework.response import Response
 
-from products.models.products_model import Product
-from products.serializers.product_serializer import (
+from products.models.products.products_model import Product
+from products.serializers.products.product_serializer import (
     ListProductSerializer, SingleProductSerializer
 )
 from utils.logger.logger_handler import logger

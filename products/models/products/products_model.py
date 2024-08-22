@@ -105,6 +105,7 @@ class ProductCart(BaseModel):
     )
     total_amount = models.FloatField(default=0.0)
     total_taxed = models.FloatField(default=0.0)
+    total_quantity = models.IntegerField(default=0)
     currency = models.ForeignKey(
         "products.ProductCurrency",
         on_delete=models.DO_NOTHING,
@@ -113,7 +114,7 @@ class ProductCart(BaseModel):
     )
 
     def __str__(self):
-        return self.pk
+        return f"{self.pk}-{self.total_amount}"
 
 
 class Product(BaseModel):

@@ -1,6 +1,6 @@
 from django.urls import path
 
-from products.views.product_views import (
+from products.views.products.product_views import (
     ProductListCreateAPIView,
     ProductRetrieveUpdateDestroyAPIView,
     ProductRetrieveFilterAPIView
