@@ -3,6 +3,9 @@ SHELL := /bin/bash
 install:
 	pip install -r requirements.txt
 
+freeze:
+	pip freeze > requirements.txt
+
 run:
 	python manage.py runserver [::]:8000
 

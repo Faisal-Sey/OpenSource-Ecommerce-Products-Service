@@ -8,5 +8,5 @@ class Menu(BaseModel):
     hidden = models.BooleanField(default=False)
     url = models.URLField(blank=True)
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.title

@@ -10,5 +10,5 @@ class Image(BaseModel):
     image_width = models.IntegerField(default=0, blank=True, null=True)
     image_height = models.IntegerField(default=0, blank=True, null=True)
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.name

@@ -11,88 +11,88 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 import os
 from pathlib import Path
-from typing import List
+from typing import List, Optional
 
-from dotenv import load_dotenv
 from config.project_configs import PROJECT_CONFIGS
 from utils.logger.logger import CUSTOM_LOGGING
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 TEMPLATES_DIR = os.path.join(BASE_DIR, "templates")
-FIXTURE_DIRS = (
-    os.path.join(BASE_DIR, "fixtures"),
-)
+FIXTURE_DIRS = (os.path.join(BASE_DIR, "fixtures"),)
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-5j(o#67ry(+vjy0!eu29n^bm_x4thou08!bm_jo20p!-(gb4$4'
+SECRET_KEY = "django-insecure-5j(o#67ry(+vjy0!eu29n^bm_x4thou08!bm_jo20p!-(gb4$4"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = PROJECT_CONFIGS.get("DEBUG").lower() == 'true'
-ALLOWED_HOSTS = PROJECT_CONFIGS.get("ALLOWED_HOST").split(",")
+DEBUG_VALUE = PROJECT_CONFIGS.get("DEBUG")
+DEBUG = DEBUG_VALUE is not None and DEBUG_VALUE.lower() == "true"
+
+ALLOWED_HOSTS_VALUE = PROJECT_CONFIGS.get("ALLOWED_HOST")
+ALLOWED_HOSTS = (
+    ALLOWED_HOSTS_VALUE.split(",") if ALLOWED_HOSTS_VALUE is not None else []
+)
 
 
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
     # external
-    'corsheaders',
-    'rest_framework',
-    'django_quill',
-
+    "corsheaders",
+    "rest_framework",
+    "django_quill",
     # internal
-    'products'
+    "products",
 ]
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
+    "django.middleware.security.SecurityMiddleware",
+    "django.contrib.sessions.middleware.SessionMiddleware",
     "corsheaders.middleware.CorsMiddleware",
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "django.middleware.common.CommonMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-ROOT_URLCONF = '_project.urls'
+ROOT_URLCONF = "_project.urls"
 
 TEMPLATES = [
     {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': (TEMPLATES_DIR, ),
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": (TEMPLATES_DIR,),
+        "APP_DIRS": True,
+        "OPTIONS": {
+            "context_processors": [
+                "django.template.context_processors.debug",
+                "django.template.context_processors.request",
+                "django.contrib.auth.context_processors.auth",
+                "django.contrib.messages.context_processors.messages",
             ],
         },
     },
 ]
 
-WSGI_APPLICATION = '_project.wsgi.application'
+WSGI_APPLICATION = "_project.wsgi.application"
 
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
     }
 }
 
@@ -102,16 +102,16 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 ]
 
@@ -119,9 +119,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = "UTC"
 
 USE_I18N = True
 
@@ -131,45 +131,55 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = "static/"
 
-STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATIC_ROOT = BASE_DIR / "staticfiles"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 
 # CORS HEADERS CONFIG
 DEFAULT_CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
 ]
-CUSTOM_CORS_ALLOWED_ORIGINS: str = PROJECT_CONFIGS.get("CUSTOM_CORS_ALLOWED_ORIGINS")
-CORS_ALLOWED_ORIGINS: List[str] = CUSTOM_CORS_ALLOWED_ORIGINS.split(",") \
-    if CUSTOM_CORS_ALLOWED_ORIGINS else DEFAULT_CORS_ALLOWED_ORIGINS
+CUSTOM_CORS_ALLOWED_ORIGINS: Optional[str] = PROJECT_CONFIGS.get(
+    "CUSTOM_CORS_ALLOWED_ORIGINS"
+)
+CORS_ALLOWED_ORIGINS: List[str] = (
+    CUSTOM_CORS_ALLOWED_ORIGINS.split(",")
+    if CUSTOM_CORS_ALLOWED_ORIGINS
+    else DEFAULT_CORS_ALLOWED_ORIGINS
+)
 
 # Logger
 LOGGING = CUSTOM_LOGGING
 
 # Quill Editor
 QUILL_CONFIGS = {
-    'default': {
-        'theme': 'snow',
-        'modules': {
-            'syntax': True,
-            'toolbar': [
+    "default": {
+        "theme": "snow",
+        "modules": {
+            "syntax": True,
+            "toolbar": [
                 [
-                    {'font': []},
-                    {'header': []},
-                    {'align': []},
-                    'bold', 'italic', 'underline', 'strike', 'blockquote',
-                    {'list': 'ordered'}, {'list': 'bullet'},
-                    {'color': []},
+                    {"font": []},
+                    {"header": []},
+                    {"align": []},
+                    "bold",
+                    "italic",
+                    "underline",
+                    "strike",
+                    "blockquote",
+                    {"list": "ordered"},
+                    {"list": "bullet"},
+                    {"color": []},
                 ],
-                ['link'],
-                ['clean'],
-            ]
-        }
+                ["link"],
+                ["clean"],
+            ],
+        },
     }
 }
