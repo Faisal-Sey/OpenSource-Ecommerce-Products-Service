@@ -13,3 +13,6 @@ PROJECT_CONFIGS = {
     "ALLOWED_HOST": os.getenv("ALLOWED_HOST"),
     "USE_EXTERNAL_LOGGER": os.getenv("USE_EXTERNAL_LOGGER"),
 }
+
+
+SORT_KEY_CHOICES = ("created_on", "price", "best_selling", "relevance")

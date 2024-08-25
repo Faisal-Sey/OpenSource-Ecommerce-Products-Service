@@ -2,6 +2,7 @@ from typing import Any
 
 from rest_framework import serializers
 
+from config.project_configs import SORT_KEY_CHOICES
 from products.models.products.images_model import Image
 from products.models.products.products_model import (
     Product,
@@ -103,9 +104,10 @@ class SingleProductSerializer(
 
 class ProductSearchListSerializer(serializers.Serializer):  # type: ignore[misc]
     query = serializers.CharField(required=False, default="")
-    reverse = serializers.ChoiceField(
-        required=False, choices=("asc", "desc"), default="asc"
-    )
+    reverse = serializers.BooleanField(required=False, default=False)
     sort_key = serializers.ChoiceField(
-        required=False, choices=("name", "price", "rating"), default="price"
+        required=False, choices=SORT_KEY_CHOICES, default="price"
     )
+    page_number = serializers.IntegerField(required=False, default=1)
+    items_per_page = serializers.IntegerField(required=False, default=10)
+    custom_query = serializers.DictField(required=False, default={})
